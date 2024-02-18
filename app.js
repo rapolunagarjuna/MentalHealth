@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const userController = require('./controllers/UserController');
 const journalController = require('./controllers/JournalController');
 const moodController = require('./controllers/MoodController');
+const groupController = require('./controllers/GroupController');
 
 const express = require('express');
 const app = express();
@@ -26,8 +27,14 @@ app.post('/journals', journalController.createJournalEntry);
 app.get('/users/:userId/journals', journalController.getAllJournalEntriesForUser);
 app.get('/journals/:entryId', journalController.getJournalEntryById);
 
-router.post('/moods', moodController.logMood);
-router.get('/users/:userId/moods', moodController.getMoodLogsByUser);
+app.post('/moods', moodController.logMood);
+app.get('/users/:userId/moods', moodController.getMoodLogsByUser);
+
+app.post('/groups', groupController.createGroup);
+app.get('/groups', groupController.getAllGroups);
+app.get('/groups/:groupName', groupController.getGroupByName);
+app.post('/groups/:groupName', groupController.updateGroup);
+app.delete('/groups/:groupName', groupController.deleteGroup);
 
 
 app.get('/', (req, res) => {
